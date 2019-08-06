@@ -1,7 +1,10 @@
 class Solution {
   public int lengthOfLongestSubstring(String s) {
     String current = "";
-    String longest = new String();
+    String longest = "";
+    if (s.length > 0) {
+      longest = "" + s.charAt(0);
+    }
 
     for (int i = 0; i < s.length(); i++) {
       current = "" + s.charAt(i);
