@@ -1,36 +1,41 @@
 class Solution {
   public String longestPalindrome(String s) {
-    String longest = "";
+    //Weird solution but I think it works:
+    //GO BACKWARDS, find the first palindrome
     int stringLength = s.length();
-    for (int i = 0; i < stringLength - longest.length(); i++) {
-      for (int j = i + 1 + longest.length(); j <= s.length(); j++) {
-        String sub = s.substring(i, j);
+    for (int i = stringLength; i > 0; i--) {
+      for (int j = 0; j <= stringLength - i; j++) {
+        String sub = s.substring(j, j + i);
         if (isPalindrome(sub)) {
-          if (sub.length() > longest.length()) {
-            longest = sub;
-          }
+          return sub;
         }
       }
     }
 
-    return longest;
+    return "";
   }
 
   //Returns true if s is a palindrome
   public boolean isPalindrome(String s) {
     int stringLength = s.length();
-    //Recursive solution
-    //Check if first and last character are identical, removed them, then
-    //call isPalindrome on the resulting substring
+    int start = 0;
+    int end = stringLength - 1;
+
     if (stringLength == 1 || stringLength == 0) {
       return true;
     }
 
-    //If first and last char are the same
-    if (s.charAt(0) == s.charAt(stringLength - 1)) {
-      return isPalindrome(s.substring(1, stringLength - 1));
+    while (start < end) {
+
+      if (s.charAt(0) == s.charAt(end)) {
+        start++;
+        end--;
+        continue;
+      }
+
+      return false;
     }
 
-    return false;
+    return true;
   }
 }
