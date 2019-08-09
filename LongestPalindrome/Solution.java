@@ -21,13 +21,10 @@ class Solution {
     int start = 0;
     int end = stringLength - 1;
 
-    if (stringLength == 1 || stringLength == 0) {
-      return true;
-    }
-
+    //Check characters from outside in
     while (start < end) {
 
-      if (s.charAt(0) == s.charAt(end)) {
+      if (s.charAt(start) == s.charAt(end)) {
         start++;
         end--;
         continue;
