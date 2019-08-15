@@ -2,6 +2,7 @@ class Solution {
   public int myAtoi(String str) {
     char firstChar = 0;
     int firstIndex = 0;
+    int lastIndex = str.length();
     boolean negative = false;
 
     int result = 0;
@@ -27,14 +28,29 @@ class Solution {
       firstIndex++;
     }
 
-    for (int j = 0; j < str.length(); j++) {
-      int k = str.length() - j - 1;
-
-      result += digitToInt(str.charAt(k)) * Math.pow(10, j);
+    //Find where the number ends
+    for (int i = firstIndex; i < str.length(); i++) {
+      if (str.charAt(i) > 57 || str.charAt(i) < 48) {
+        lastIndex = i;
+        break;
+      }
     }
 
-    if (negative) {
-      return -result;
+    for (int j = 0; j < lastIndex; j++) {
+      //Go backwards through the string and read the digits
+      int k = lastIndex - j - 1;
+
+      if (negative) {
+        result -= digitToInt(str.charAt(k)) * Math.pow(10, j);
+      } else {
+        result += digitToInt(str.charAt(k)) * Math.pow(10, j);
+      }
+    }
+
+    if (result > Integer.MAX_VALUE) {
+      result = Integer.MAX_VALUE;
+    } else if (result < Integer.MIN_VALUE) {
+      result = Integer.MIN_VALUE;
     }
 
     return result;
