@@ -1,26 +1,26 @@
 class Solution {
   public String longestCommonPrefix(String[] strs) {
-    //IDEA:
-    //Scan all strings simultaneously!
-    //Keep going until we find a different char
-
-    //First, find longest string
-    int longestStringLength = 0;
-    for (int i = 0; i < strs.length; i++) {
-      if (strs[i].length() > longestStringLength) {
-        longestStringLength = strs[i].length();
-      }
+    //Base case: if no strings in array, return empty string
+    if (strs.length == 0) {
+      return "";
     }
 
-    String common = "";
+    //Start with the first string and compare it
+    String common = strs[0];
+
+    int end = common.length();
 
     //Start scanning
-    for (int i = 0; i < longestStringLength; i++) {
-      for (int j = 0; j < strs.length; j++) {
-        //How to compare characters?
+    for (int i = 1; i < strs.length; i++) {
+      //if the prefix is not found
+      while (strs[i].indexOf(common) != 0) {
+        //Shrink the common prefix and scan again
+        end--;
+        common = common.substring(0, end);
       }
     }
 
+    return common;
 
   }
 }
