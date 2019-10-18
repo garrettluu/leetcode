@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
   public List<List<Integer>> threeSum(int[] nums) {
     List<List<Integer>> result = new ArrayList<>();
@@ -10,12 +12,21 @@ class Solution {
             triplet.add(nums[i]);
             triplet.add(nums[j]);
             triplet.add(nums[k]);
-            result.add(triplet);
+            if (!tripletIsInList(triplet, result)) {
+              result.add(triplet);
+            }
           }
         }
       }
     }
 
     return result;
+  }
+
+  // Check if a triplet is already in the list
+  private boolean tripletIsInList(List<Integer> triplet,
+      List<List<Integer>> list) {
+    Collections.sort(triplet);
+    return list.contains(triplet);
   }
 }
