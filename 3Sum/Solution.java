@@ -2,51 +2,37 @@ class Solution {
   public List<List<Integer>> threeSum(int[] nums) {
     List<List<Integer>> result = new ArrayList<>();
     Arrays.sort(nums);
-    for (int i = 0; i < nums.length; i++) {
-      if (nums[i] > 0) {
-        break;
+    for (int i = 0; i < nums.length - 2; i++) {
+      if (i > 0 && nums[i] == nums[i - 1]) {
+        continue;
       }
       int target = -nums[i];
-      List<List<Integer>> sum = twoSum(nums, target, i + 1);
-      if (sum != null) {
-        for (List<Integer> pair : sum) {
-          List<Integer> triplet = new ArrayList<>();
-          triplet.add(-target);
-          triplet.addAll(pair);
-          if (!tripletIsInList(triplet, result)) {
-            result.add(triplet);
+      int left = i + 1;
+      int right = nums.length - 1;
+      while (left < right) {
+        int sum = nums[left] + nums[right];
+        if (sum > target) {
+          right--;
+        } else if (sum < target) {
+          left++;
+        } else {
+          Integer[] triplet = {-target, nums[left], nums[right]};
+          result.add(Arrays.asList(triplet));
+
+          left++;
+          right--;
+
+          while (left < right && nums[left] == nums[left - 1]) {
+            left++;
+          }
+
+          while (left < right && nums[right] == nums[right + 1]) {
+            right--;
           }
         }
       }
     }
+
     return result;
-  }
-
-  private List<List<Integer>> twoSum(int[] nums, int target, int start) {
-    List<List<Integer>> result = new ArrayList<>();
-    Map<Integer, Integer> map = new HashMap<>();
-    for (int i = start; i < nums.length; i++) {
-      map.put(nums[i], i);
-    }
-
-    for (int i = start; i < nums.length; i++) {
-      int complement = target - nums[i];
-      if (map.containsKey(complement) && map.get(complement) != i) {
-        Integer[] pair = {complement, nums[i]};
-        List<Integer> pairList = Arrays.asList(pair);
-        result.add(pairList);
-      }
-    }
-
-    if (result.size() == 0) {
-      return null;
-    }
-    return result;
-  }
-
-  private boolean tripletIsInList(List<Integer> triplet,
-      List<List<Integer>> list) {
-    Collections.sort(triplet);
-    return list.contains(triplet);
   }
 }
