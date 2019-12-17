@@ -6,18 +6,22 @@ class Solution {
       if (c == '(' || c == '[' || c == '{') {
         stack.push(c);
       } else {
-        if (c == ')') {
-          if (stack.pop() != '(') {
-            return false;
+        if (!stack.empty()) {
+          if (c == ')') {
+            if (stack.pop() != '(') {
+              return false;
+            }
+          } else if (c == ']'){
+            if (stack.pop() != '[') {
+              return false;
+            }
+          } else if (c == '}'){
+            if (stack.pop() != '{') {
+              return false;
+            }
           }
-        } else if (c == ']'){
-          if (stack.pop() != '[') {
-            return false;
-          }
-        } else if (c == '}'){
-          if (stack.pop() != '{') {
-            return false;
-          }
+        } else {
+          return false;
         }
       }
     }
